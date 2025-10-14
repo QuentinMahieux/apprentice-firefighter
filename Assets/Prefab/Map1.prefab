@@ -196,6 +196,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6985740223289934980}
   - component: {fileID: 6985740223289934981}
+  - component: {fileID: 1403114362634275062}
   m_Layer: 0
   m_Name: Map1
   m_TagString: Untagged
@@ -242,6 +243,25 @@ MonoBehaviour:
   serverOnly: 0
   visibility: 0
   hasSpawned: 0
+--- !u!114 &1403114362634275062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6985740223289934978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36afe8875ee49c04ca2b0407b47c1857, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnPoints:
+  - {fileID: 4139669293913615827}
+  - {fileID: 4647930643828201277}
+  - {fileID: 2973382408998918182}
+  - {fileID: 8728192122484585687}
+  - {fileID: 8835642686742849917}
+  - {fileID: 2835789413105165541}
 --- !u!1 &6985740224075638659
 GameObject:
   m_ObjectHideFlags: 0
