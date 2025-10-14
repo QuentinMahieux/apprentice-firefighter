@@ -8,25 +8,47 @@ using UnityEngine.SceneManagement;
 
 public class InputManagerSelectGame : MonoBehaviour
 {
+    public static InputManagerSelectGame instance;
     public List<GameObject> listCursorSelect;
     public List<GameObject> listCaseSelect;
+
+    public GameObject canvas;
 
     private int index;
     private bool isCowlDown;
     
-    public string ipZone;
+    public TMP_InputField  ipZone;
+    public TMP_InputField playerName;
 
     private void Awake()
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
         DontDestroyOnLoad(gameObject);
-        
     }
 
     void Start()
     {
-        
+        ipZone.text = "localhost";
+        ipZone.onValueChanged.AddListener(UpdateTextFromInput);
+        playerName.onValueChanged.AddListener(UpdateTextPlayerName);
     }
 
+    void UpdateTextFromInput(string text)
+    {
+        ipZone.text = text;
+    }
+
+    public void UpdateTextPlayerName(string text)
+    {
+        playerName.text = text;
+    }
     void Update()
     {
         if (Input.GetButtonDown("Button A"))
@@ -58,7 +80,7 @@ public class InputManagerSelectGame : MonoBehaviour
 
         if (SceneManager.GetActiveScene().name != "Main")
         {
-            Destroy(gameObject);
+            canvas.gameObject.SetActive(false);
         }
     }
     
@@ -79,9 +101,14 @@ public class InputManagerSelectGame : MonoBehaviour
         else if (index == 1)
 
         {
-            NetworkManager.singleton.networkAddress = ipZone;
+            NetworkManager.singleton.networkAddress = ipZone.text;
             NetworkManager.singleton.StartClient();
  
         }
+    }
+
+    public string GetPlayerName()
+    {
+        return string.IsNullOrEmpty(playerName.text) ? null: playerName.text;
     }
 }

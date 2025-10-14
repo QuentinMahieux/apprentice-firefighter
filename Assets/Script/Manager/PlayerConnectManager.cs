@@ -1,31 +1,38 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using Mirror;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class PlayerConnectManager : NetworkManager
+namespace Script.Manager
 {
-    [Header("")]
-    [Header("PlayerConnectManager")]
-    public Material[] playerMaterials;
-    private bool isSpawn;
+    public class PlayerConnectManager : NetworkManager
+    {
+        [Header("")]
+        [Header("PlayerConnectManager")]
+        public Material[] playerMaterials;
+        private bool isSpawn;
     
 
-    [Obsolete("Obsolete")]
-    public override void OnServerAddPlayer(NetworkConnectionToClient conn)
-    {
-        base.OnServerAddPlayer(conn);
-        Transform spawnPoint = PlayerSpawn.instance.spawnPoints[NetworkServer.connections.Count-1];
-        GameObject player = conn.identity.gameObject;
-        player.transform.position = spawnPoint.position;
-        player.transform.rotation = spawnPoint.rotation;
+        [Obsolete("Obsolete")]
+        public override void OnServerAddPlayer(NetworkConnectionToClient conn)
+        {
+            base.OnServerAddPlayer(conn);
         
-        player.gameObject.GetComponent<Renderer>().material = playerMaterials[NetworkServer.connections.Count-1];
+            Transform spawnPoint = PlayerSpawn.instance.spawnPoints[NetworkServer.connections.Count-1];
+            GameObject player = conn.identity.gameObject;
+        
+            player.transform.position = spawnPoint.position;
+            player.transform.rotation = spawnPoint.rotation;
+
+            int matIndex = NetworkServer.connections.Count - 1;
+        
+            var playerMatSync = player.gameObject.GetComponent<PlayerMaterialSync>();
+            if (playerMatSync != null)
+            {
+                playerMatSync.SetMaterialIndex(matIndex);
+            }
         
         
-        
-        Debug.Log("Player connected" + conn.identity);
+            Debug.Log("Player connected" + NetworkServer.connections.Count);
+        }
     }
 }
