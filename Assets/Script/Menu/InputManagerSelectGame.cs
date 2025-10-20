@@ -30,7 +30,6 @@ public class InputManagerSelectGame : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        DontDestroyOnLoad(gameObject);
     }
 
     void Start()
@@ -78,10 +77,7 @@ public class InputManagerSelectGame : MonoBehaviour
             listCursorSelect[index].SetActive(true);
         }
 
-        if (SceneManager.GetActiveScene().name != "Main")
-        {
-            canvas.gameObject.SetActive(false);
-        }
+
     }
     
 

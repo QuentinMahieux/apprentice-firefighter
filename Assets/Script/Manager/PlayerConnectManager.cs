@@ -12,7 +12,6 @@ namespace Script.Manager
         private bool isSpawn;
     
 
-        [Obsolete("Obsolete")]
         public override void OnServerAddPlayer(NetworkConnectionToClient conn)
         {
             base.OnServerAddPlayer(conn);
@@ -30,9 +29,13 @@ namespace Script.Manager
             {
                 playerMatSync.SetMaterialIndex(matIndex);
             }
-        
-        
+            NumbrePlayerConnect.instance.AddPlayer();
             Debug.Log("Player connected" + NetworkServer.connections.Count);
         }
+         public override void OnServerDisconnect(NetworkConnectionToClient conn)
+         {
+             base.OnServerDisconnect(conn);
+             NumbrePlayerConnect.instance.RemovePlayer();
+         }
     }
 }
