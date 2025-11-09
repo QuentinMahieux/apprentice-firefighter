@@ -11,7 +11,6 @@ public class StartGameManager : NetworkBehaviour
     public int numberReady;
     public TMP_Text numberconnect;
 
-    private bool isReady;
     void Awake()
     {
         if (instance == null)
@@ -23,6 +22,7 @@ public class StartGameManager : NetworkBehaviour
             Destroy(gameObject);
         }
     }
+    
     public override void OnStartServer()
     {
         base.OnStartServer();
@@ -30,34 +30,24 @@ public class StartGameManager : NetworkBehaviour
 
     }
 
-    void Update()
+    [Server]
+    public void AddReady()
     {
-        if (Input.GetButtonDown("Button X"))
-        {
-            isReady = true;
-            Debug.Log("Button X");
-            PressX();
-        }
+        numberReady++;
     }
     
 
+    
+    
     public void TextUpdate()
     {
-        numberconnect.text = "En ligne:" + numberReady.ToString() + "/" + NumbrePlayerConnect.instance.numbre;
+        numberconnect.text = "En ligne:" + numberReady.ToString() + "/" + NumbrePlayerConnect.instance.numbre + "prêts";
     }
+    
     void OnNumberChanged(int oldValue, int newValue)
     {
         TextUpdate();
     }
-
-    [Server]
-    void PressX()
-    {
-        if (!isReady)
-        {
-            numberReady++;
-        }
-    }
-
+    
 
 }
